@@ -1,17 +1,19 @@
-{% extends 'header.html' %} {% block content %}
+{% extends 'header.html' %} {# Extiende la plantilla base 'header.html' #}
+{% block content %}
 <main>
-    <h1 class="text-center">Buscador de Pokemon</h1>
+    <h1 class="text-center">Buscador de Pokemon</h1> {# Título principal centrado #}
 
     <div class="d-flex justify-content-center" style="margin-bottom: 1%">
-        <!-- Buscador del sitio -->
+        <!-- Formulario de búsqueda de Pokémon -->
         <form class="d-flex" action="{% url 'buscar' %}" method="POST">
-            {% csrf_token %}
+            {% csrf_token %} {# Token de seguridad para formularios POST #}
             <input class="form-control me-2" type="search" name="query" placeholder="Pikachu, Charizard, Ditto" aria-label="Search">
             <button class="btn btn-outline-success" type="submit">Buscar</button>
         </form>
     </div>
 
     <div class="d-flex gap-1 col-2 mx-auto mb-3">
+        <!-- Botones para filtrar por tipo de Pokémon -->
         <form method="post" action="{% url 'filter_by_type' %}">
             {% csrf_token %}
             <input type="hidden" name="type" value="fire">
@@ -31,44 +33,95 @@
         </form>
     </div>
 
-        <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
         {% if images|length == 0 %}
+        <!-- Mensaje si no hay resultados de búsqueda -->
         <h2 class="text-center">La búsqueda no arrojó resultados...</h2>
-        {% else %} {% for img in images %}
+        {% else %}
+        {% for img in images %}
+        <!-- Tarjeta para mostrar cada Pokémon -->
         <div class="col">
-            <!-- evaluar si la imagen pertenece al tipo fuego, agua o planta -->
-            <div class="card border-success mb-3 ms-5" style="max-width: 540px; ">
-                 <div class="row g-0">
-                     <div class="col-md-4">
-                         <img src="{{ img.image }}" class="card-img-top"alt="imagen">
-                     </div>
+            <div class="card mb-3 ms-5
+                {# Asigna una clase de borde según el tipo de Pokémon #}
+                {% if 'Fire' in img.types %}
+                    border-danger
+                {% elif 'Water' in img.types %}
+                    border-primary
+                {% elif 'Grass' in img.types %}
+                    border-success
+                {% elif 'Bug' in img.types %}
+                    border-success
+                {% elif 'Ground' in img.types %}
+                    border-ground
+                {% elif 'Poison' in img.types %}
+                    border-poison
+                {% elif 'Electric' in img.types %}
+                    border-electric
+                {% elif 'Normal' in img.types %}
+                    border-secondary
+                {% elif 'Fighting' in img.types %}
+                    border-fighting
+                {% elif 'Psychic' in img.types %}
+                    border-psychic
+                {% elif 'Rock' in img.types %}
+                    border-rock
+                {% elif 'Ghost' in img.types %}
+                    border-ghost
+                {% elif 'Dragon' in img.types %}
+                    border-dragon
+                {% elif 'Fairy' in img.types %}
+                    border-fairy
+                {% elif 'Steel' in img.types %}
+                    border-steel
+                {% elif 'Dark' in img.types %}
+                    border-dark
+                {% elif 'Ice' in img.types %}
+                    border-ice
+                {% else %}
+                    border-info
+                {% endif %}"
+                style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <!-- Imagen del Pokémon -->
+                        <img src="{{ img.image }}" class="card-img-top" alt="imagen">
+                    </div>
 
                     <div class="col-md-8">
                         <div class="card-body">
+                            <!-- Nombre y número del Pokémon -->
                             <h3 class="card-title">{{ img.name }} #{{ img.id }} <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="Master Ball"></h3>
                             <p class="card-text">
+                                <!-- Tipos del Pokémon en una alerta -->
                                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
                                     {% for poketype in img.types %}
                                     <strong><em>{{poketype}}</em></strong>
-                                    {% endfor %} 
+                                    {% endfor %}
                                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div>
                             </p>
+                            <!-- Altura, peso y experiencia base -->
                             <p class="card-text"><small class="text-body-secondary">Altura: {{ img.height }}</small></p>
                             <p class="card-text"><small class="text-body-secondary">Peso: {{ img.weight }}</small></p>
                             <p class="card-text"><small class="text-body-secondary">Nivel de experiencia base: {{ img.base }}</small></p>
                         </div>
                         {% if request.user.is_authenticated %}
                         <div class="card-footer text-center">
+                            <!-- Formulario para agregar a favoritos (solo si el usuario está autenticado) -->
                             <form method="post" action="{% url 'agregar-favorito' %}">
                                 {% csrf_token %}
                                 <input type="hidden" name="name" value="{{ img.name }}">
                                 <input type="hidden" name="height" value="{{ img.height }}">
                                 <input type="hidden" name="weight" value="{{ img.weight }}">
                                 <input type="hidden" name="types" value="{{ img.types }}">
-                                <input type="hidden" name="image" value="{{ img.image }}"> {% if img in favourite_list %}
-                                <button type="submit" class="btn btn-primary btn-sm float-left" style="color:white" disabled>✔️ Favoritos</button> {% else %}
-                                <button type="submit" class="btn btn-primary btn-sm float-left" style="color:white">❤️ Favoritos</button> {% endif %}
+                                <input type="hidden" name="image" value="{{ img.image }}">
+                                {% if img.name in favourite_list_name %}
+                                <!-- Botón deshabilitado si ya está en favoritos -->
+                                <button type="submit" class="btn btn-primary btn-sm float-left" style="color:white" disabled>✔️ Favoritos</button>
+                                {% else %}
+                                <!-- Botón para agregar a favoritos -->
+                                <button type="submit" class="btn btn-primary btn-sm float-left" style="color:white">❤️ Favoritos</button>
+                                {% endif %}
                             </form>
                         </div>
                         {% endif %}
@@ -76,7 +129,8 @@
                 </div>
             </div>
         </div>
-        {% endfor %} {% endif %}
+        {% endfor %}
+        {% endif %}
     </div>
 </main>
 {% endblock %}
