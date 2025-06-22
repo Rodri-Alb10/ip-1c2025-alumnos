@@ -26,7 +26,7 @@ def save_favourite(fav):
 
 def get_all_favourites(user):
     return list(Favourite.objects.filter(user=user).values(
-        'id', 'name', 'height', 'weight', 'types','base_experience', 'image'
+        'id', 'name', 'height', 'weight', 'types','base_experience', 'image','user'
     ))
 
 
