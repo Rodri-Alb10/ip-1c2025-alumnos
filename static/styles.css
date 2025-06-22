@@ -140,3 +140,63 @@ table.table td i {
     margin-top: 6px;
     font-size: 95%;
 }
+
+.border-ground {
+    border-color: #974925 !important;
+    border-width: 1px !important;
+}
+
+.border-poison {
+    border-color: #A33EA1 !important;
+    border-width: 1px !important;
+}
+
+.border-electric {
+    border-color: #F7D02C !important;
+    border-width: 1px !important;
+}
+
+.border-ice {
+    border-color: #96D9D6 !important;
+    border-width: 1px !important;
+}
+
+.border-fighting {
+    border-color: #771512 !important;
+    border-width: 1px !important;
+}
+
+.border-psychic {
+    border-color: #F95587 !important;
+    border-width: 1px !important;
+}
+
+.border-rock {
+    border-color: #B6A136 !important;
+    border-width: 1px !important;
+}
+
+.border-ghost {
+    border-color: #735797 !important;
+    border-width: 1px !important;
+}
+
+.border-dragon {
+    border-color: #6F35FC !important;
+    border-width: 1px !important;
+}
+
+.border-fairy {
+    border-color: #D685AD !important;
+    border-width: 1px !important;
+}
+
+.border-steel {
+    border-color: #B7B7CE !important;
+    border-width: 1px !important;
+}
+
+.border-dark {
+    border-color: #705746 !important;
+    border-width: 1px !important;
+}
