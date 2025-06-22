@@ -23,3 +23,4 @@ class Card:
     # Método hashCode.
     def __hash__(self):
         return hash((self.name, self.height, self.weight, self.id))
+
