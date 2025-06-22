@@ -4,7 +4,7 @@ import requests
 from ...config import config
 
 # comunicación con la REST API.
-# este método se encarga de "pegarle" a la API y traer una lista de objetos JSON.
+# este método realiza una solicitud a la API y obtiene una lista de objetos en formato JSON.
 def getAllImages():
     json_collection = []
     for id in range(1, 30):
@@ -20,12 +20,11 @@ def getAllImages():
         if 'detail' in raw_data and raw_data['detail'] == 'Not found.':
             print(f"[transport.py]: Pokémon con id {id} no encontrado.")
             continue
-
         json_collection.append(raw_data)
 
     return json_collection
 
-# obtiene la imagen correspodiente para un type_id especifico 
+# obtiene la imagen correspodiente para un type_id en concreto 
 def get_type_icon_url_by_id(type_id):
     base_url = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-iii/colosseum/'
     return f"{base_url}{type_id}.png"
