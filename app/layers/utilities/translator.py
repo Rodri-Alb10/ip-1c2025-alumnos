@@ -6,7 +6,7 @@ from app.layers.utilities.card import Card
 def fromRequestIntoCard(poke_data):
     card = Card(
         id=poke_data.get('id'),
-        name=poke_data.get('name'),
+        name=poke_data.get('name').capitalize(),
         height=poke_data.get('height'),
         weight=poke_data.get('weight'),
         base=poke_data.get('base_experience'),
@@ -19,7 +19,8 @@ def fromRequestIntoCard(poke_data):
 def getTypes(poke_data):
     types = []
     for type in poke_data.get('types'):
-        t = safe_get(type, 'type','name' )
+        t = safe_get(type, 'type','name' ).capitalize()
+
         types.append(t)
     return types
 
